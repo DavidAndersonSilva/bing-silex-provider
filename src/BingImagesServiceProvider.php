@@ -1,6 +1,6 @@
 <?php
 
-namespace Bing\Silex;
+namespace Bing;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;

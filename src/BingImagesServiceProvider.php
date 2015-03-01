@@ -2,7 +2,7 @@
 
 namespace Bing;
 
-use BingImagesServiceProvider;
+use Bing\BingImagesService;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +22,7 @@ class BingImagesServiceProvider implements ServiceProviderInterface {
 				throw new \Exception("Bing: chave de aplicação não foi informada");
 			}
 
-			$this->bingServiceImage = new BingImagesServiceProvider($key);
+			$this->bingServiceImage = new BingImagesService($key);
 			return $this->getResponse($query);
 		});
 	}
@@ -30,7 +30,7 @@ class BingImagesServiceProvider implements ServiceProviderInterface {
 	public function boot (Application $app) { }
 
 	private function getResponse ($query) {
-		return $this->getResponse($query);
+		return $this->bingServiceImage->getResponse($query);
 	}
 
 }

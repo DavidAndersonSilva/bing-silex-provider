@@ -11,26 +11,20 @@ use Silex\ServiceProviderInterface;
 
 class BingImagesServiceProvider implements ServiceProviderInterface {
 
-	private $api = 'https://api.datamarket.azure.com/Bing/Search/v1/Image';
 	private $bingServiceImage;
 
 	public function register (Application $app) {
-		$app['bing.images'] = $app->protect(function ($query) use ($app) {
+		$app['bing.images'] = $app->share(function ($query) use ($app) {
 
 			$key = trim($app['bing.images.key']);
 			if (empty($key)) {
 				throw new \Exception("Bing: chave de aplicação não foi informada");
 			}
 
-			$this->bingServiceImage = new BingImagesService($key);
-			return $this->getResponse($query);
+			return new BingImagesService($key);
 		});
 	}
 
 	public function boot (Application $app) { }
-
-	private function getResponse ($query) {
-		return $this->bingServiceImage->getResponse($query);
-	}
 
 }
